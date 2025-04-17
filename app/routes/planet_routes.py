@@ -1,5 +1,5 @@
 from flask import Blueprint
-from ..models.planet import planets
+from app.models.planet import planets
 
 planets_bp = Blueprint("planets_bp", __name__, url_prefix="/planets")
 
@@ -12,7 +12,8 @@ def get_all_planets():
             dict(
                 id = planet.id,
                 name = planet.name,
-                description = planet.description
+                description = planet.description,
+                species = planet.species
             )
         )
 

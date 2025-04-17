@@ -1,5 +1,5 @@
 class Planet:
-    def __init__(self, id, name, description, species):
+    def __init__(self, id, name, description, species=None):
         self.id = id
         self.name = name
         self.description = description

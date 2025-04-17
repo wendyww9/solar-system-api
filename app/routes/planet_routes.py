@@ -5,16 +5,16 @@ planets_bp = Blueprint("planets_bp", __name__, url_prefix="/planets")
 
 @planets_bp.get("")
 def get_all_planets():
-    planets_responce = []
+    planets_response = []
 
     for planet in planets:
-        planets_responce.append(
+        planets_response.append(
             dict(
                 id = planet.id,
                 name = planet.name,
                 description = planet.description,
-                species = planet.species
+                habitable = planet.habitable
             )
         )
 
-    return planets_responce
+    return planets_response

@@ -1,3 +1,12 @@
+from sqlalchemy.orm import Mapped, mapped_column
+from ..db import db
+
+class Planet(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    name: Mapped[str]
+    description: Mapped[str]
+    habitable: Mapped[str]
+    
 # class Planet:
 #     def __init__(self, id, name, description, habitable=False):
 #         self.id = id

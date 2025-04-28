@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, make_response, request
+from flask import Blueprint, abort, make_response, request, Response
 from app.models.planet import Planet
 from ..db import db
 # from app.models.planet import planets
@@ -40,6 +40,36 @@ def get_all_planets():
         )
     
     return planets_response
+
+@planets_bp.get("/<planet_id>")
+def get_one_planet(planet_id):
+    planet = validate_planet(planet_id)
+    
+    return {
+        "id": planet.id,
+        "name": planet.name,
+        "description": planet.description,
+        "habitable": planet.habitable
+    }
+
+def validate_planet(planet_id):
+    try:
+        planet_id = int(planet_id)
+    except:
+        response = {"message": f"planet with {planet_id} invalid"}
+        abort(make_response(response, 400))
+    
+    query = db.select(Planet).where(Planet.id == planet_id)
+    planet = db.session.scalar(query)
+
+    if not planet:
+        response = {"message": f"planet with {planet_id} does not exist"}
+        abort(make_response(response, 404))
+
+    return planet
+
+
+
 
 # @planets_bp.get("")
 # def get_all_planets():

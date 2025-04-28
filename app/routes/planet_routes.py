@@ -5,6 +5,7 @@ from ..db import db
 
 planets_bp = Blueprint("planets_bp", __name__, url_prefix="/planets")
 
+#Wave 3
 @planets_bp.post("")
 def create_planet():
     request_body = request.get_json()
@@ -24,6 +25,7 @@ def create_planet():
     }
     return response, 201
 
+#Wave 3
 @planets_bp.get("")
 def get_all_planets():
     query = db.select(Planet).order_by(Planet.id)
@@ -41,6 +43,7 @@ def get_all_planets():
     
     return planets_response
 
+#Wave 3
 @planets_bp.get("/<planet_id>")
 def get_one_planet(planet_id):
     planet = validate_planet(planet_id)
@@ -68,8 +71,29 @@ def validate_planet(planet_id):
 
     return planet
 
+#Wave 4
+@planets_bp.put("/<planet_id>")
+def update_one_planet(planet_id):
+    planet = validate_planet(planet_id)
+    request_body = request.json
+    
+    planet.name = request_body["name"]
+    planet.description = request_body["description"]
+    planet.habitable = request_body["habitable"]
+    db.session.commit()
 
+    return Response(status=204, mimetype ="application/json")
 
+#Wave 4
+@planets_bp.delete("/<planet_id>")
+def delete_one_planet(planet_id):
+    planet = validate_planet(planet_id)
+
+    db.session.delete(planet)
+    db.session.commit()
+
+    return Response(status=204, mimetype ="application/json")
+    
 
 # @planets_bp.get("")
 # def get_all_planets():

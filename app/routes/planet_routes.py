@@ -28,7 +28,12 @@ def create_planet():
 #Wave 3
 @planets_bp.get("")
 def get_all_planets():
-    query = db.select(Planet).order_by(Planet.id)
+    query = db.select(Planet)
+
+    description_param = request.args.get("description")
+    if description_param:
+        query = query.where(Planet.description.ilike(f"%{description_param}%"))
+        
     planets = db.session.scalars(query)
     planets_response = []
     for planet in planets:

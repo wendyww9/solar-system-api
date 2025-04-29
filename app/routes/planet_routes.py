@@ -33,14 +33,13 @@ def get_all_planets():
     if description_param:
         query = query.where(Planet.description.ilike(f"%{description_param}%"))
         
-    habitable_param = request.args.get('habitable')
+    habitable_param = request.args.get("habitable")
     if habitable_param:
         query = query.where(Planet.habitable.ilike(f"%{habitable_param}%"))
         
     query = query.order_by(Planet.id)
-    query = db.select(Planet)
-
     planets = db.session.scalars(query)
+    
     planets_response = []
     for planet in planets:
         planets_response.append(

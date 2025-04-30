@@ -25,7 +25,7 @@ def create_planet():
     }
     return response, 201
 
-#Wave 3
+#Wave 3 and Wave 5
 @planets_bp.get("")
 def get_all_planets():
     query = db.select(Planet)
@@ -39,7 +39,7 @@ def get_all_planets():
         
     query = query.order_by(Planet.id)
     planets = db.session.scalars(query)
-    
+
     planets_response = []
     for planet in planets:
         planets_response.append(

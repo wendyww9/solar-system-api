@@ -57,7 +57,9 @@ def update_one_planet(planet_id):
     planet = validate_model(Planet, planet_id)
     request_body = request.get_json()
     
-    planet = Planet.from_dict(request_body)
+    planet.name = request_body["name"]
+    planet.description = request_body["description"]
+    planet.habitable = request_body["habitable"]
     db.session.commit()
 
     return Response(status=204, mimetype ="application/json")

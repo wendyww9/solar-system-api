@@ -1,6 +1,6 @@
 from flask import Blueprint, abort, make_response, request, Response
 from app.models.planet import Planet
-from app.models.planet import Moon
+from app.models.moon import Moon
 from ..db import db
 from .route_utilities import validate_model
 

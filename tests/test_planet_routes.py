@@ -31,7 +31,7 @@ def test_get_one_planet_no_data(client):
     # Assert
     assert response.status_code == 404
     assert response_body == {
-        'message': 'planet with 1 does not exist'
+        'message': 'Planet with id 1 does not exist'
     }
 
 def test_create_one_planet(client):
@@ -42,10 +42,18 @@ def test_create_one_planet(client):
         "habitable": 'false'
     })
     response_body = response.get_json()
+    get_response = client.get("planets/1").get_json()
+
 
     # Assert
     assert response.status_code == 201
     assert response_body == {
+        "id": 1,
+        "name": "Very New Planet",
+        "description": "Very-very new planet",
+        "habitable": 'false'
+    }
+    assert get_response =={
         "id": 1,
         "name": "Very New Planet",
         "description": "Very-very new planet",
